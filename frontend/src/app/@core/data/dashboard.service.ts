@@ -12,23 +12,17 @@ const httpOptions= {
 
 @Injectable()
 export class DashboardService {
-	//url: string = 'http://192.168.0.100:8080/RobotinoApp/Servlet';
+
   url: string = '/api';
   constructor(private http: HttpClient) { }
 
   sendPost(urlappend: any, data: any){
 		let send = this.url + urlappend;
   	return this.http.post(send, data, httpOptions)
-    /*.pipe(
-      catchError(val => of('I caught:'+val));
-    )*/;
   }
 
 	  sendData(data: any){
 	  	return this.http.post(this.url, data, httpOptions)
-	    /*.pipe(
-	      catchError(val => of('I caught:'+val));
-	    )*/;
 	  }
 	sendGet(urlappend: any){
 		let send = this.url + urlappend;

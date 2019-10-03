@@ -1,31 +1,23 @@
-# GLOBAL BLOCKCHAIN PARCEL STANDARD (GBPS) - Intelligent Parcels
-
-We are proud to introduce the *Global Blockchain Parcel Standard* as our submission for the Intelligent Parcels vertical in Mobi Grand Challenge 2019.
-
-This README document serves three purposes:
-1. Providing an overview of the basic idea of our system.
-2. Serving as a set-up guide for our system as hosted on our Amazon EC2 resp. on the S3 bucket.
-3. Giving a management summary for busy judges!
-
-If you would like to inspect our hardware solution, please feel free to call **+49 157 73847564**.
+# GLOBAL BLOCKCHAIN PARCEL STANDARD (GBPS) 
+We are proud to introduce the *Global Blockchain Parcel Standard* as our submission for the Mobi Grand Challenge Phase 2!
 
 ## Overview
 
-### Our Challenge Submission
+### Our Hackathon Submission
 The logistics of last-mile delivery increasingly poses challenges to its stakeholders. Customers requesting specific delivery times, congested cities and the resulting environmental issues, inefficient routes to remote areas and empty trips are just some of the examples.
 An innovative solution to these challenges is to leverage other networks for last-mile transport, such as the mobility sharing economy, food delivery services, or - in the nearer future - autonomous machines.
 However, this poses a variety of challenges as well. How do you integrate the individual networks transparently and efficiently? How do you handle permissions and traceability? And how do you establish trust in the first place?
 
-During the challenge, we built an end-to-end system for the integration of external stakeholders for "hard-to-deliver" (e.g., too far off or too late) parcels on the last-mile. In particular, we enable parcel dispatchers (such as Die Post) to offer their unwanted parcel to other networks. Furthermore, the user of a ridesharing service (representing this other network) can then agree to deliver the parcel for cash. The necessary intermediary steps are implemented on a decentral blockchain layer, which has been created for the parcel logistics industry. This use case illustrates and technically builds on our broader vision (see below) perfectly, which is constituted by our **Global Blockchain Parcel Standard**.
+During the hackathon, we built an end-to-end system for the integration of external stakeholders for "hard-to-deliver" (e.g., too far off or too late) parcels on the last-mile. In particular, we enable parcel dispatchers (such as Die Post) to offer their unwanted parcel to other networks. Furthermore, the user of a ridesharing service (representing this other network) can then agree to deliver the parcel for cash. The necessary intermediary steps are implemented on a decentral blockchain layer, which has been created for the parcel logistics industry. This use case illustrates and technically builds on our broader vision (see below) perfectly, which is constituted by our **Global Blockchain Parcel Standard**.
 
 In particular, we built the following components:
 
 + A web application with a multi-layer user interface for parcel dispatchers.
 + A (mobile) ridesharing web application with live maps, displaying the delivery jobs.
 + Several smart contracts connecting these two applications and providing logic.
-+ A decentral private Ethereum logistics blockchain network hosting these smart contracts, which runs on an AWS EC2 instance.
++ A decentral private Ethereum logistics blockchain network hosting these smart contracts, which ran on an Cluster of AWS EC2 instances. 
 + As well as a functional hardware box with a self-built smart lock to illustrate further services and think the service end-to-end.
-+ An n-node startup script for Quorum - which unfortunately due to technical problems with the still young protocol - we could not use for the final implementation of the case, but created a rich startup script for.
+
 
 ### Why Blockchain?
 Blockchain, or - more generally - distributed ledger technology is a vital component in our solution for one main reason: In the complex interorganizational processes in last mile parcel logistics, a jointly used platform can leverage an efficient flow of information and processes and drastically lower the number of necessary standards and agreements. Instead of isolated data management and many bilateral contracts, there is one common platform or one agreed-on standard according to which all services are provided. Until shortly, such a platform on which adherence to specific rules hat to be ensured has not been possible without the service of a trusted, central intermediary.
@@ -41,7 +33,7 @@ The good news is, a wide variety of solutions for many of the challenges outline
 
 Our goal is to build the infrastructure for the GBPS, in which we also run a node in order to provide the best possible service. With our exoertise in the architecture, we can then give smaller businesses access to the ecosystem by providing the relevant interfaces.    
 
->We envision our **Global Blockchain Parcel Standard** to bridge the individual services and thereby create an innovative ecosystem for innovations in the parcel logistics sector. A first step has already been presented with our smart contract standards, smart lock hardware solution and the creation of our private Quorum logistics blockchain in the challenge.
+>We envision our **Global Blockchain Parcel Standard** to bridge the individual services and thereby create an innovative ecosystem for innovations in the parcel logistics sector. A first step has already been presented with our smart contract standards, smart lock hardware solution and the creation of our private Quorum logistics blockchain in the Hackathon.
 
 ## Set-up Guide
 To test our system, you require nothing more than a web browser and some curiosity.
@@ -50,17 +42,23 @@ We provide two URLs to our working solution:
 
 On the first webpage, you can see the mobile-oriented application simulating a ridesharing app. Once someone has planned out their journey, they get an offer for transporting a parcel. If you accept to transport it, you will see how your route adapts:
 
-The second link brings you to the parcel dispatcher's user interface. You can see all parcels currently out for adoption in a list. You also see basic information about your blockchain account. You can dispatch new parcels for adoption by other networks in the second category of the menu to the left. These are then sent to the blockchain node, which runs on our AWS EC2 instance. They are then open for adoption.
+The second link brings you to the parcel dispatcher's user interface. You can see all parcels currently out for adoption in a list. You also see basic information about your blockchain account. You can dispatch new parcels for adoption by other networks in the second category of the menu to the left. These are then sent to the blockchain node. We run the blockchain network on a cluster of AWS EC2 t2.medium instances. But for testing purpose a simple Ganache testnetwork is sufficient.
 
-In order to make the apps run on a private ethereum chain, some preparations are necessary because ether are needed in order to being able to pay for transactions. With the following steps, you can easily accomplish this:
-
-- add Metamask addon by clicking the following link:
-  --> Firefox: https://addons.mozilla.org/firefox/downloads/file/3038913/metamask-6.6.2-an+fx.xpi?src=dp-btn-primary
-  --> Chrome: https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn
-
-- In the tab which opens right after the installation, choose getStarted, create a Wallet, click no Thanks, choose a password, copy the backup phrase, confirm the secret backup phrase, continue, click the icon next to "main ethereum network", import an account, and import the private key 0xb9d4d09bd540ba68eed8afdd2ed932c5c1cac12e59fbd9f9ba4f61e8635e155a. Afterwards, click on "main ethereum network", "custom rpc" with the config
- 
-Of course, if you are interested in the technical details, we would love to see you around our GitHub repository. 
+1. Setup ganache-cli ```npm i ganache-cli -g``` -- Make shure that ganache is using port 8545.
+2. Add Metamask to your browser and link it to on of the accounts hosted by ganache.
+3. Deploy the smart contract "AllInOne.sol" on the network, which can be done either via truffle or remix.
+   1. Replace the address of the smart contract in the files app/index.html and frontend/src/app/@core/data/ethcontract.service.ts
+4. Start the backend server by calling the commands ```npm install``` and ```node index.js``` in the folder backend.
+5. Start the frontend by 
+   1. Changing to the frontend folder
+   2. Calling ```npm install```
+   3. Calling ```npm rebuild node-sass```
+   4. Calling ```ng serve```
+   5. The frontend is now available at localhost:4200 
+6. Start the app by
+   1. Replacing the Google maps api key in the file index.html in the folder app 
+   2. And hosting it for the example with ```npm install http-server -g```and ```http-server```
+   3. The app is now available at localhost:8080 
 
 
 The repository should be fairly self-explanatory, but here are some hints nevertheless:
@@ -68,8 +66,11 @@ Our web application for parcel dispatchers is built as an Angular project. The "
 
 Our web application simulating a ridesharing app (mobile-optimised) can be found in the folder 'app'. The main script is called index.html.
 
-Our main smart contracts as used in the system can be found in the folder called 'Solidity'. While the smart contracts ParcelAdministrator.sol, ParcelContract.sol, and ServiceProvider.sol are each instantiations specifically designed for our application. An interesting smart contract is called Interfaces.sol, as it is part of our envisioned GBPS. It generically models a parcel entity and therefore provides a first step towards our broader vision.
+Our main smart contracts as used in the system can be found in the folder called 'smartContracts'. While the smart contracts ParcelAdministrator.sol, ParcelContract.sol, and ServiceProvider.sol are each instantiations specifically designed for our application. An interesting smart contract is called Interfaces.sol, as it is part of our envisioned GBPS. It generically models a parcel entity and therefore provides a first step towards our broader vision.
 
 ## Key Take-Aways
-+ During the challenge, we built a decentral and open end-to-end system for the integration of non-logistics networks into parcel logistics use cases, such as delivering "hard-to-deliver" parcels on the last-mile.
++ During the hackathon, we built a decentral and open end-to-end system for the integration of non-logistics networks into parcel logistics use cases, such as delivering "hard-to-deliver" parcels on the last-mile.
 + Our vision is that our **Global Blockchain Parcel Standard** bridges individual services related (but not limited) to parcel logistics and thereby creates an innovative ecosystem for innovations in this and other sectors.
+
+# Big Thanks to
+**Dennis Jelito, Johannes Sedlmeir and Vincent Schlatt who worked with us together all the time on this project and helped to leverage it to what it is today**

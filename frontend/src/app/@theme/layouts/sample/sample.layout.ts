@@ -28,7 +28,7 @@ import { StateService } from '../../../@core/data/state.service';
                    [end]="sidebar.id === 'end'">
         <nb-sidebar-header>
           <a href="#" class="btn btn-hero-primary main-btn">
-            <i class="ion ion-shield"></i><span>venoc</span>
+            <i class="ion ion-shield"></i><span>vecon</span>
           </a>
         </nb-sidebar-header>
         <ng-content select="nb-menu"></ng-content>
